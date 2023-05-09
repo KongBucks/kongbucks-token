@@ -4,7 +4,7 @@ import chaiAsPromised from 'chai-as-promised'
 import { BigNumber, Contract,   Signer, Wallet } from 'ethers'
 import hre, { ethers } from 'hardhat'
 //import { deploy } from 'helpers/deploy-helpers'
-import { XBitcoinTokenTest, XBitsToken } from '../generated/typechain'
+import { XBitcoinTokenTest, KongBucks } from '../generated/typechain'
 import { getPayspecInvoiceUUID, PayspecInvoice , ETH_ADDRESS} from 'payspec-js'
 import { deploy } from '../helpers/deploy-helpers'
 import { createAndFundRandomWallet } from './test-utils'
@@ -20,7 +20,7 @@ interface SetupOptions {}
 
 interface SetupReturn {
   originalTokenContract: XBitcoinTokenTest
-  upgradeTokenContract: XBitsToken
+  upgradeTokenContract: KongBucks
 }
 
 const setup = deployments.createFixture<SetupReturn, SetupOptions>(

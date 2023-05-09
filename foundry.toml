@@ -8,17 +8,12 @@ cache_path  = 'generated/cache_forge'
 [doc]
 homepage= "HOME.md"
 ignore = [
-    "*/EAS/*.sol",
-    "*/mock/*.sol",
-
-    "*/TellerV0Storage.sol",
-    "*/ProtocolFeeMock.sol",
-    "*/TellerV2Mock.sol",
+   
 
     "*/libraries/*.*",
     "*/types/*.*",
     "*/Types/*.*",
     "*/interfaces/*.*",
-    "*/interfaces/escrow/*.*", 
+   
     "*/README.md",
 ]

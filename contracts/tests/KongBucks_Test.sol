@@ -1,57 +1,58 @@
 // Adds Test library to the context
- 
+ pragma solidity ^0.8.6;
 
 import "./Testable.sol";
 import "../KongBucks.sol";
+import "./KongBucks_Override.sol";
 
-pragma solidity ^0.8.6;
 
 // `_Test` suffix means it is a test contract
-contract KongBucks_Test is Testable,KongBucks(address(0),"") {
+contract KongBucks_Test is Testable {
+
+  KongBucks_Override public kongBucks;
+    uint public  _MINIMUM_TARGET = 2**16;      
+    uint public  _MAXIMUM_TARGET = 2**234;
 
 
-  receive() external payable override(Testable, KongBucks) {}
-
-  function initialize() internal override{
-
-    epochCount = 100;
-
-    miningTarget = _MAXIMUM_TARGET;
-
-    assertEq(totalSupply, 21000000 * 10**uint(decimals),"Incorrect total supply");
-    
-    maxSupplyForEra = totalSupply - (totalSupply / ( 2**(rewardEra + 1)));
-
-    assertEq(maxSupplyForEra, 10500000 * 10**uint(decimals),"Incorrect total supply");
-
+  function setUp() public {
+    kongBucks = new KongBucks_Override(address(0),"");
   }
+
+  //receive() external payable override(Testable, KongBucks) {}
+
  
     // `_test` suffix means it is a test function
     function test_miningEpoch() public {
 
-        super._startNewMiningEpoch();
+        kongBucks.startNewMiningEpoch();
 
-        assertEq(epochCount,101,"invalid epoch count");
+        assertEq(kongBucks.epochCount(),101,"invalid epoch count");
     }
 
     function test_adjustDifficuly() public {
 
-    assertEq(miningTarget,_MAXIMUM_TARGET,"invalid mining target");
+    vm.roll(1000);
 
-    super._reAdjustDifficulty(600);
+    assertEq(kongBucks.miningTarget(),_MAXIMUM_TARGET,"invalid mining target");
 
-    assertEq(epochCount,100,"invalid epoch count");
+    kongBucks.reAdjustDifficulty(600);
+ 
+    assertEq(kongBucks.epochCount(),100,"invalid epoch count");
     //assertEq(miningTarget,_MAXIMUM_TARGET,"invalid mining target");
 
-    miningTarget = _MAXIMUM_TARGET;
-    super._reAdjustDifficulty(1);
+
+    uint256 miningTarget = kongBucks.miningTarget();
+    
+    kongBucks.setMiningTarget(  _MAXIMUM_TARGET  ); 
+    kongBucks.reAdjustDifficulty(1); 
+    
+    kongBucks.setMiningTarget(  _MAXIMUM_TARGET  ); 
+    kongBucks.reAdjustDifficulty(1024);
+
+    kongBucks.setMiningTarget(  _MAXIMUM_TARGET  );  
+    kongBucks.reAdjustDifficulty(1024*60);
 
 
-    miningTarget = _MAXIMUM_TARGET;
-    super._reAdjustDifficulty(1024);
-
-    miningTarget = _MAXIMUM_TARGET;
-    super._reAdjustDifficulty(1024*60);
   }
 
   

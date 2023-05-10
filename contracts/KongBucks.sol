@@ -475,7 +475,7 @@ library ExtendedMath {
 
  
 
-contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
+contract KongBucks is ERC20Standard("KONG","Kongbucks",8), EIP2612 {
    
     using ExtendedMath for uint;
    
@@ -491,6 +491,7 @@ contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
     uint internal constant targetEthBlocksPerDiffPeriod = _BLOCKS_PER_READJUSTMENT * 60; 
  
 
+    address public immutable originalTokenContract; 
 
     uint public miningTarget;
     bytes32 public challengeNumber;  
@@ -505,7 +506,6 @@ contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
 
     uint public tokensMinted;
 
-    address public originalTokenContract; 
 
     uint256 public amountDeposited;
 

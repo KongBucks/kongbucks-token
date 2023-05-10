@@ -42,7 +42,7 @@ pragma solidity ^0.8.6;
         ."  .s$$s                                     .$',',$.
         $s.s$$$$S..............   ................    $$....s$s......
          `""'           `     ```"""""""""""""""         `""   ``
-                   the tool for peaceful revolution 
+                   the tools for peaceful revolution 
 
          
  
@@ -53,13 +53,13 @@ pragma solidity ^0.8.6;
 
 // KONGBUCKS
 
-// Decentralied neutral pure-mined ERC20 Token 
+// Decentralized neutral pure-mined ERC20 Token 
 
-// THE CURRENCY OF SOCIETY 
+// The currency of society.
 
 
 
-// Symbol      : KONG
+// Symbol      : KB
 
 // Name        : KONGBUCKS
 
@@ -475,7 +475,7 @@ library ExtendedMath {
 
  
 
-contract KongBucks is ERC20Standard("KONG","Kongbucks",8), EIP2612 {
+contract KongBucks is ERC20Standard("KB","Kongbucks",8), EIP2612 {
    
     using ExtendedMath for uint;
    

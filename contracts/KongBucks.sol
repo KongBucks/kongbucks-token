@@ -1,4 +1,5 @@
 pragma solidity ^0.8.6;
+ 
 
 /*
 
@@ -484,9 +485,11 @@ contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
 
     uint public epochCount; 
 
-    uint public _BLOCKS_PER_READJUSTMENT = 64;   
-    uint public  _MINIMUM_TARGET = 2**16;      
-    uint public  _MAXIMUM_TARGET = 2**234;
+    uint public constant _BLOCKS_PER_READJUSTMENT = 64;   
+    uint public constant _MINIMUM_TARGET = 2**16;      
+    uint public constant _MAXIMUM_TARGET = 2**234;
+    uint internal constant targetEthBlocksPerDiffPeriod = _BLOCKS_PER_READJUSTMENT * 60; 
+ 
 
 
     uint public miningTarget;
@@ -561,7 +564,7 @@ contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
         require(lastRewardEthBlockNumber != block.number);
 
         balances[minter] = balances[minter] + (currentMiningReward);
-        emit Transfer(address(this), minter, currentMiningReward);
+        emit Transfer(address(0), minter, currentMiningReward);
 
         tokensMinted = tokensMinted + currentMiningReward;
 
@@ -618,9 +621,6 @@ contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
 
  
     function _reAdjustDifficulty(uint ethBlocksSinceLastDifficultyPeriod) internal {
-
-
-        uint targetEthBlocksPerDiffPeriod = _BLOCKS_PER_READJUSTMENT * 60; 
  
 
         //if there were less eth blocks passed in time than expected
@@ -630,14 +630,14 @@ contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
 
           uint excess_block_pct_extra = (excess_block_pct - 100).limitLessThan(1000);
           // If there were 5% more blocks mined than expected then this is 5.  If there were 100% more blocks mined than expected then this is 100.
-
+            
           //make it harder
           miningTarget = miningTarget - ((miningTarget / 2000) * excess_block_pct_extra);   //by up to 50 %
         }else{
           uint shortage_block_pct = (ethBlocksSinceLastDifficultyPeriod * (100)) / ( targetEthBlocksPerDiffPeriod );
 
           uint shortage_block_pct_extra = (shortage_block_pct - 100).limitLessThan(1000); //always between 0 and 1000
-
+       
           //make it easier
           miningTarget = miningTarget + ((miningTarget / 2000) * shortage_block_pct_extra);   //by up to 50 %
         }
@@ -683,7 +683,7 @@ contract KongBucks is ERC20Standard("KONG","KongBucks",8), EIP2612 {
         balances[from] = balances[from] + (amount);
         amountDeposited = amountDeposited + (amount);
         
-        emit Transfer(address(this), from, amount);
+        emit Transfer(address(0), from, amount);
         
         return true;
     }

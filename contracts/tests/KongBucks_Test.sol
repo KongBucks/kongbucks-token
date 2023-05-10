@@ -5,6 +5,7 @@ import "./Testable.sol";
 import "../KongBucks.sol";
 import "./KongBucks_Override.sol";
 
+import "../../lib/forge-std/src/console.sol";
 
 // `_Test` suffix means it is a test contract
 contract KongBucks_Test is Testable {
@@ -42,17 +43,56 @@ contract KongBucks_Test is Testable {
 
 
     uint256 miningTarget = kongBucks.miningTarget();
-    
+
+    kongBucks.setMiningTarget(  _MAXIMUM_TARGET  ); 
+    kongBucks.reAdjustDifficulty(64); 
+
+
+    console.logUint(kongBucks.miningTarget());
+
+    kongBucks.setMiningTarget(  _MAXIMUM_TARGET  ); 
+    kongBucks.reAdjustDifficulty(64*60); 
+
+    console.logUint(kongBucks.miningTarget());
+
+    kongBucks.setMiningTarget(  _MAXIMUM_TARGET  ); 
+    kongBucks.reAdjustDifficulty(1024*60*60); 
+
+
+    console.logUint(kongBucks.miningTarget());
+
     kongBucks.setMiningTarget(  _MAXIMUM_TARGET  ); 
     kongBucks.reAdjustDifficulty(1); 
+
+    console.logUint(kongBucks.miningTarget());
     
     kongBucks.setMiningTarget(  _MAXIMUM_TARGET  ); 
     kongBucks.reAdjustDifficulty(1024);
+
+
+    console.logUint(kongBucks.miningTarget());
 
     kongBucks.setMiningTarget(  _MAXIMUM_TARGET  );  
     kongBucks.reAdjustDifficulty(1024*60);
 
 
+    console.logUint(kongBucks.miningTarget());
+
+     
+    kongBucks.reAdjustDifficulty(64*60); 
+    console.logUint(kongBucks.miningTarget());
+
+    kongBucks.reAdjustDifficulty(64*60); 
+    console.logUint(kongBucks.miningTarget());
+
+
+    kongBucks.reAdjustDifficulty(32*60); 
+    console.logUint(kongBucks.miningTarget());
+
+
+
+    kongBucks.reAdjustDifficulty(32*60); 
+    console.logUint(kongBucks.miningTarget());
   }
 
   
